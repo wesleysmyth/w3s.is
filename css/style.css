@@ -279,14 +279,6 @@ html, body {
   height: 100%;
 }
 
-#name {
-  font-family: 'courier new', monospace;
-  color: rgb(49, 199, 27);
-  text-shadow: rgb(49, 199, 27) 0px 0px 1px, rgba(43, 210, 0, 0.6) 0px 0px 5px, rgba(43, 210, 0, 0.4) 0px 5px 4px;
-  text-align: center;
-  animation: fadeIn 15s;
-}
-
 .cursor {
   color: rgb(49, 251, 21);
   text-shadow: rgb(49, 251, 21) 0px 0px 1px, rgba(43, 262, 0, 0.6) 0px 0px 5px, rgba(43, 262, 0, 0.4) 0px 5px 4px;
@@ -318,7 +310,7 @@ textarea:focus, input:focus{
   padding-left: 10px;
   font-family: 'courier new', monospace;
   font-weight: 700;
-  font-size: 0.7em;
+  font-size: 0.8em;
   line-height: 2em;
   caret-color: transparent;
 }
@@ -327,7 +319,7 @@ textarea:focus, input:focus{
   color: rgb(46, 212, 23);
   font-family: 'courier new', monospace;
   font-weight: 700;
-  font-size: 1em;
+  font-size: 1.1em;
   line-height: 2em;
   padding-left: 25px;
 }
@@ -361,11 +353,15 @@ textarea:focus, input:focus{
   color: rgb(49, 199, 27);
   text-shadow: rgb(49, 199, 27) 0px 0px 1px, rgba(43, 210, 0, 0.6) 0px 0px 5px, rgba(43, 210, 0, 0.4) 0px 5px 4px;
   background-color: rgba(0, 0, 0, 0.9);
+  font-family: 'courier new', monospace;
+  font-weight: 700;
+  font-size: 1em;
+  line-height: 2em;
 }
 
 .close {
   text-align: right;
-  padding: 30px 25px;
+  padding: 20px 25px;
   cursor: pointer;
 }
 
