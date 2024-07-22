@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 addNewLine();
             } else if (lastInputValue.trim() === '/contact') {
                 showContactInfo();
+                addNewLine();
             } else {
                 addNewLine();
             }
@@ -121,10 +122,21 @@ function showCommands() {
 function showContactInfo() {
     const contactInfo = {
         'email': 'wesleytatesmith@gmail.com',
-        'phone': '860-460-6616',
+        'phone': '+1-860-460-6616',
         'linkedin': 'https://www.linkedin.com/in/wesleytatesmith/',
         'github': 'https://github.com/wesleysmyth'
     };
+
+    Object.keys(contactInfo).forEach(contact => {
+        const value = contactInfo[ contact ];
+        const isLink = value.includes('http');
+        const contactDiv = document.createElement('div');
+        const href = contact === 'email' ? `mailto:${value}` : contact === 'phone' ? `tel:${value}` : value;
+
+        contactDiv.classList.add('contact');
+        contactDiv.innerHTML = `${contact} - <a href="${href}" target="_blank">${value}</a>`;
+        document.querySelector('.cursor-container').appendChild(contactDiv);
+    });
 }
 
 function appendNewCursor(newCursor, newCursorInput) {
