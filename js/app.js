@@ -8,14 +8,39 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === 'Enter') {
             const lastInput = getLastInput();
             const lastInputValue = lastInput.value;
+            const trimmedText = lastInputValue.trim();
+            const miscCommands = {
+                'ls': 'Nothing here to see...',
+                'pwd': 'Where am I?',
+                'cd': 'I can\'t go anywhere...',
+                'whoami': 'Wouldn\'t you like to know...',
+                'mkdir': 'I don\'t have that kind of power...',
+                'rm': 'I\'m not that kind of terminal...',
+                'touch': 'I can\'t do'
+            };
+            const matchedMiscCommand = Object.keys(miscCommands).find(command => {
+                const splitText = trimmedText.split(' ');
+                let matched = false;
 
-            if (lastInputValue.trim() === 'clear') {
+                splitText.forEach(text => {
+                    if (text === command) {
+                        matched = true;
+                    }
+                });
+
+                return matched;
+            });
+
+            if (trimmedText === 'clear') {
                 clearTerminal();
-            } else if (lastInputValue.trim() === '/help') {
+            } else if (trimmedText === '/help') {
                 showCommands();
                 addNewLine();
-            } else if (lastInputValue.trim() === '/contact') {
+            } else if (trimmedText === '/contact') {
                 showContactInfo();
+                addNewLine();
+            } else if (matchedMiscCommand) {
+                addTextLine(miscCommands[ matchedMiscCommand ]);
                 addNewLine();
             } else {
                 addNewLine();
@@ -139,12 +164,18 @@ function showContactInfo() {
     });
 }
 
+function addTextLine(text) {
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('text');
+    textDiv.innerHTML = text;
+    document.querySelector('.cursor-container').appendChild(textDiv);
+}
+
 function appendNewCursor(newCursor, newCursorInput) {
     const cursorContainer = document.querySelector('.cursor-container');
 
     newCursorInput.value = '';
     newCursorInput.style.width = '0ch';
-
     cursorContainer.appendChild(newCursor);
     focusLastInput();
 }

@@ -315,7 +315,7 @@ textarea:focus, input:focus{
   caret-color: transparent;
 }
 
-.command, .contact {
+.command, .contact, .text {
   color: rgb(46, 212, 23);
   font-family: 'courier new', monospace;
   font-weight: 700;
