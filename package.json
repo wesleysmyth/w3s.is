@@ -22,6 +22,7 @@
     "webpack-merge": "^5.10.0"
   },
   "dependencies": {
-    "compass-mixins": "^0.12.12"
+    "compass-mixins": "^0.12.12",
+    "openai": "^4.53.0"
   }
 }

@@ -330,6 +330,7 @@ textarea:focus, input:focus{
 
 .help {
   font-family: 'courier new', monospace;
+  font-size: 1.2em;
   color: rgb(49, 199, 27);
   text-shadow: rgb(49, 199, 27) 0px 0px 1px, rgba(43, 210, 0, 0.6) 0px 0px 5px, rgba(43, 210, 0, 0.4) 0px 5px 4px;
   padding: 25px 20px;
