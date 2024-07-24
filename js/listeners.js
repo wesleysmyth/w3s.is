@@ -1,3 +1,8 @@
+import axios from 'axios';
+const API = axios.create({
+    baseURL: 'http://localhost:3000',
+});
+
 export function registerKeydownListener() {
     document.body.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
@@ -34,6 +39,25 @@ export function registerKeydownListener() {
             } else if (trimmedText === '/contact') {
                 showContactInfo();
                 addNewLine();
+            } else if (trimmedText.startsWith('/chat')) {
+                // enable chat w/ AI
+                const chatText = trimmedText.replace('/chat', '').trim();
+                //send request to server
+                toggleEllipsis();
+                toggleUnderscore();
+                API.post('/ai', { text: chatText })
+                    .then(function ({ data }) {
+                        toggleEllipsis();
+                        toggleUnderscore();
+                        addTextLine(data);
+                        addNewLine();
+                    })
+                    .catch(function (error) {
+                        toggleEllipsis();
+                        toggleUnderscore();
+                        addTextLine('Sorry, I\'m having trouble connecting to the server.');
+                        addNewLine();
+                    });
             } else if (matchedMiscCommand) {
                 addTextLine(miscCommands[ matchedMiscCommand ]);
                 addNewLine();
@@ -126,7 +150,7 @@ function showCommands() {
         '/about': 'About Me',
         '/resume': 'Resume',
         '/contact': 'Contact',
-        '/talk': 'Start a Conversation',
+        '/chat <input text>': 'Chat with my AI assistant',
         'clear': 'Clear the terminal',
     };
 
@@ -135,7 +159,7 @@ function showCommands() {
         const commandDiv = document.createElement('div');
 
         commandDiv.classList.add('command');
-        commandDiv.innerHTML = `${command} - ${value}`;
+        commandDiv.innerHTML = `${command} - ${value}`.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
         document.querySelector('.cursor-container').appendChild(commandDiv);
     });
 }
@@ -174,4 +198,15 @@ function appendNewCursor(newCursor, newCursorInput) {
     newCursorInput.style.width = '0ch';
     cursorContainer.appendChild(newCursor);
     focusLastInput();
+}
+
+function toggleEllipsis() {
+    const lastCursor = getLastCursor();
+    lastCursor.classList.toggle('loading');
+}
+
+function toggleUnderscore() {
+    const lastCursor = getLastCursor();
+    const lastCursorUnderScore = lastCursor.childNodes[3];
+    lastCursorUnderScore.style.display = lastCursorUnderScore.style.display === 'none' ? 'inline' : 'none';
 }
