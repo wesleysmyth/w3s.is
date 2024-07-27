@@ -1,7 +1,4 @@
-import axios from 'axios';
-const API = axios.create({
-    baseURL: 'http://localhost:3000',
-});
+import { sendAIText } from './api.js';
 
 export function registerKeydownListener() {
     document.body.addEventListener('keydown', function(e) {
@@ -45,7 +42,7 @@ export function registerKeydownListener() {
                 //send request to server
                 toggleEllipsis();
                 toggleUnderscore();
-                API.post('/ai', { text: chatText })
+                sendAIText(chatText)
                     .then(function ({ data }) {
                         toggleEllipsis();
                         toggleUnderscore();

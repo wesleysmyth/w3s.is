@@ -1,19 +1,18 @@
 import 'dotenv/config';
 import express from 'express';
 import OpenAI from 'openai';
-import cors from 'cors'
+import cors from 'cors';
+import { v4 as uuidv4 } from 'uuid';
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
-async function main() {
-  const completion = await openai.chat.completions.create({
-    messages: [{ role: 'system', content: 'You are a helpful assistant.' }],
-    model: 'gpt-4o-mini',
-  });
-
-  console.log(completion.choices);
-}
+const baseMessages = [
+  {
+    role: 'system',
+    content: 'You are a helpful assistant.'
+  }
+];
+const userMessages = {};
 
 const app = express();
 const port = 3000;
@@ -25,14 +24,33 @@ app.get('/', (req, res) => {
   res.send('Welcome to my server!');
 });
 
+app.get('/token', async (req, res) => {
+  const uuid = uuidv4();
+  res.send(uuid);
+});
+
 app.post('/ai', async (req, res) => {
+  const token = req.headers.authorization;
   const text = req.body.text;
+  console.log('req.headers', req.headers);
+  console.log('token', token);
   const trimmedText = text.trim();
+  const currentMessage = { role: 'user', content: trimmedText };
+
+  if (!userMessages[ token ]) {
+    userMessages[ token ] = baseMessages.concat([ currentMessage ]);
+  } else {
+    userMessages[ token ].push(currentMessage);
+  }
+
+  const allMessages = userMessages[ token ];
   const completion = await openai.chat.completions.create({
-    messages: [{ role: 'user', content: trimmedText }],
+    messages: allMessages,
     model: 'gpt-4o-mini',
   });
   const response = completion.choices[ 0 ].message.content;
+
+  userMessages[ token ].push({ role: 'assistant', content: response });
 
   res.status(201).send(response);
 });
