@@ -1,9 +1,10 @@
 import axios from 'axios';
+const authToken = localStorage.getItem('w3s_token') || await getToken();
 const APIConfig = {
     baseURL: 'http://localhost:3000',
     headers: {
         'Content-Type': 'application/json',
-        Authorization: await localStorage.getItem('w3s_token') || getToken()
+        Authorization: authToken,
     },
 };
 const API = axios.create(APIConfig);
@@ -22,5 +23,5 @@ export async function getToken() {
 }
 
 export function sendAIText(chatText) {
-    return API.post('/ai', { text: chatText });
+    return API.post('/ai', { text: chatText, token: authToken });
 }
