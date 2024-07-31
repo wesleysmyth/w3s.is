@@ -1,4 +1,5 @@
-import { sendAIText } from './api.js';
+import { getResume, sendAIText } from './api.js';
+import aboutText from './about.js';
 
 export function registerKeydownListener() {
     document.body.addEventListener('keydown', function(e) {
@@ -32,6 +33,12 @@ export function registerKeydownListener() {
                 clearTerminal();
             } else if (trimmedText === '/help') {
                 showCommands();
+                addNewLine();
+            } else if (trimmedText === '/about') {
+                addTextLine(aboutText);
+                addNewLine();
+            } else if (trimmedText === '/resume') {
+                getResume();
                 addNewLine();
             } else if (trimmedText === '/contact') {
                 showContactInfo();

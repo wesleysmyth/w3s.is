@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import fs from 'fs';
 import express from 'express';
 import OpenAI from 'openai';
 import cors from 'cors';
@@ -23,16 +24,22 @@ app.get('/', (req, res) => {
   res.send('Welcome to my server!');
 });
 
-app.get('/token', async (req, res) => {
+app.get('/token', (req, res) => {
   const uuid = uuidv4();
   res.send(uuid);
+});
+
+app.get('/resume', (req, res) => {
+  const resume = fs.readFileSync('./assets/resume.pdf', (err, data) => {
+    console.log('err', err)
+  });
+  console.log("resume", resume);
+  res.send(resume);
 });
 
 app.post('/ai', async (req, res) => {
   const token = req.headers.authorization;
   const text = req.body.text;
-  console.log('req.headers', req.headers);
-  console.log('token', token);
   const trimmedText = text.trim();
   const currentMessage = { role: 'user', content: trimmedText };
 
