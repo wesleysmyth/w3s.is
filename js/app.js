@@ -1,4 +1,3 @@
-import { getToken } from "./api";
 import {
     registerClickListener,
     registerKeydownListener,

@@ -1,6 +1,6 @@
 import axios from 'axios';
-const authToken = localStorage.getItem('w3s_token') || await getToken();
 const ip = process.env.environment === 'production' ? '74.208.11.205' : 'localhost';
+const authToken = localStorage.getItem('w3s_token') || await getToken();
 const APIConfig = {
     baseURL: `http://${ip}:3000`,
     headers: {
