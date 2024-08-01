@@ -15,7 +15,7 @@ const baseMessages = [
 ];
 const userMessages = {};
 const app = express();
-const port = 3000;
+const port = process.env.ENVIRONMENT === 'development' ? 3000 : 443;
 
 app.use(express.json());
 app.use(cors());

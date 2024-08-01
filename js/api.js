@@ -1,5 +1,6 @@
 import axios from 'axios';
 const hostname = window.location.hostname;
+const baseURL = hostname === 'localhost' ? 'http://localhost:3000' : 'https://w3s.is';
 const authToken = localStorage.getItem('w3s_token') || await getToken();
 const APIConfig = {
     baseURL: `http://${hostname}:3000`,
