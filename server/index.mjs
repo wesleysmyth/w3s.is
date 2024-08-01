@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 
 app.get('/token', (req, res) => {
   const uuid = uuidv4();
-  res.send(uuid);
+  res.json(uuid);
 });
 
 app.get('/resume', (req, res) => {
