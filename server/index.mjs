@@ -19,6 +19,7 @@ const port = process.env.ENVIRONMENT === 'development' ? 3000 : 443;
 
 app.use(express.json());
 app.use(cors());
+app.use('/api', app);
 
 app.get('/', (req, res) => {
   res.send('Welcome to my server!');
