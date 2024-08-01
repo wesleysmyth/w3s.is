@@ -3,7 +3,7 @@ const hostname = window.location.hostname;
 const baseURL = hostname === 'localhost' ? 'http://localhost:3000' : 'https://w3s.is';
 const authToken = localStorage.getItem('w3s_token') || await getToken();
 const APIConfig = {
-    baseURL: `http://${hostname}:3000`,
+    baseURL,
     headers: {
         'Content-Type': 'application/json',
         Authorization: authToken,
@@ -13,7 +13,7 @@ const API = axios.create(APIConfig);
 
 export async function getToken() {
     const token = await axios.get('/token', {
-        baseURL: `http://${hostname}:3000`,
+        baseURL,
         headers: {
             'Content-Type': 'application/json',
         }
