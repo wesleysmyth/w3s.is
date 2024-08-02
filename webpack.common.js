@@ -8,6 +8,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    filename: './js/app.js',
+    filename: '[name].js?t=' + new Date().getTime(),
   }
 };
