@@ -277,6 +277,7 @@ html {
 
 html, body {
   height: 100%;
+  cursor: text;
 }
 
 .cursor {
