@@ -104,8 +104,12 @@ function addNewLine() {
 
     // disable all previous inputs
     allCursorsArr.forEach(cursor => {
+        console.dir(cursor)
+        console.log('cursor.childNodes', cursor.childNodes)
         const cursorInput = cursor.childNodes[1];
+        console.log('cursorInput', cursorInput)
         const cursorUnderscore = [].slice.call(cursor.childNodes).find(child => child.className && child.className === 'underscore');
+        console.log('cursorUnderscore', cursorUnderscore)
 
         cursorInput.disabled = true;
 
