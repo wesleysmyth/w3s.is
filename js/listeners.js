@@ -215,6 +215,6 @@ function toggleEllipsis() {
 
 function toggleUnderscore() {
     const lastCursor = getLastCursor();
-    const lastCursorUnderScore = lastCursor.childNodes[3];
+    const lastCursorUnderScore = [].slice.call(lastCursor.childNodes).find(child => child.className && child.className === 'underscore');
     lastCursorUnderScore.style.display = lastCursorUnderScore.style.display === 'none' ? 'inline' : 'none';
 }
