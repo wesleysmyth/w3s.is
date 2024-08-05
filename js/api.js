@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { saveAs } from 'file-saver';
 const hostname = window.location.hostname;
 const baseURL = hostname === 'localhost' ? 'http://localhost:3000' : 'https://api.w3s.is';
 const authToken = localStorage.getItem('w3s_token') || await getToken();
@@ -29,7 +30,12 @@ export function sendAIText(chatText) {
 }
 
 export async function getResume() {
-    const resume = await API.get('/resume');
-    console.log("resume", resume)
-    console.dir(resume)
+    try {
+        const resume = await API.get('/resume', { responseType: 'arraybuffer' });
+        const blob = new Blob([resume.data], { type: 'application/pdf' });
+
+        saveAs(blob, 'Wesley Smith resumé.pdf');
+    } catch (error) {
+        return error;
+    }
 }

@@ -11,7 +11,15 @@ const baseMessages = [
   {
     role: 'system',
     content: 'You are a helpful assistant.'
-  }
+  },
+  // {
+  //   role: '',
+  //   content: 'Tell me about Wesley Tate Smith'
+  // },
+  // {
+  //   role: 'user',
+  //   content: 'Tell me about Wesley Tate Smith'
+  // }
 ];
 const userMessages = {};
 const app = express();
@@ -30,11 +38,11 @@ app.get('/token', (req, res) => {
 });
 
 app.get('/resume', (req, res) => {
-  const resume = fs.readFileSync('./assets/resume.pdf', (err, data) => {
-    console.log('err', err)
+  res.download('./assets/Wesley Smith resumé.pdf', `Wesley Smith resumé.pdf`, (err) => {
+    if (err) {
+      console.log('err', err);
+    }
   });
-  console.log("resume", resume);
-  res.send(resume);
 });
 
 app.post('/ai', async (req, res) => {

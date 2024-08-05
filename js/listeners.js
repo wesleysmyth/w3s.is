@@ -2,7 +2,7 @@ import { getResume, sendAIText } from './api.js';
 import aboutText from './about.js';
 
 export function registerKeydownListener() {
-    document.body.addEventListener('keydown', function(e) {
+    document.body.addEventListener('keydown', async function(e) {
         if (e.key === 'Enter') {
             const lastInput = getLastInput();
             const lastInputValue = lastInput.value;
@@ -38,7 +38,12 @@ export function registerKeydownListener() {
                 addTextLine(aboutText);
                 addNewLine();
             } else if (trimmedText === '/resume') {
-                getResume();
+                const error = await getResume();
+
+                if (error) {
+                    addTextLine('Sorry, I\'m having trouble connecting to the server.');
+                }
+
                 addNewLine();
             } else if (trimmedText === '/contact') {
                 showContactInfo();
@@ -104,12 +109,8 @@ function addNewLine() {
 
     // disable all previous inputs
     allCursorsArr.forEach(cursor => {
-        console.dir(cursor)
-        console.log('cursor.childNodes', cursor.childNodes)
         const cursorInput = cursor.childNodes[1];
-        console.log('cursorInput', cursorInput)
         const cursorUnderscore = [].slice.call(cursor.childNodes).find(child => child.className && child.className === 'underscore');
-        console.log('cursorUnderscore', cursorUnderscore)
 
         cursorInput.disabled = true;
 
