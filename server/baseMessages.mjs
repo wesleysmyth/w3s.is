@@ -1,3 +1,5 @@
+import aboutText from '../js/about.mjs';
+
 export default function getBaseMessages(resumeSections) {
     return [
         {
@@ -6,8 +8,9 @@ export default function getBaseMessages(resumeSections) {
             tools: [{ type: 'code_interpreter' }],
             model: 'gpt-4o'
         },
-        { role: 'user', content: 'Here is Wesley Tate Smith\'s resumé. Please review it and answer questions based on it if asked about Wesley.' },
+        { role: 'user', content: 'Here is Wesley Tate Smith\'s resumé. Please review it and answer questions based on it if asked about Wesley or his professional experience. You can also add additional context about the type of manager and software engineer that Wesley is based on this data.' },
         { role: 'assistant', content: 'Sure, I can help with that. Please provide the resumé details.' },
-        ...resumeSections.map(section => ({ role: 'user', content: section }))
+        ...resumeSections.map(section => ({ role: 'user', content: section })),
+        { role: 'user', content: `Here is some additional information about Wesley Tate Smith, written from his perspective, about his professional background and his career objectives. ${aboutText}` },
     ];
 }

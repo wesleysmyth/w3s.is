@@ -1,5 +1,6 @@
 import { getResume, sendAIText } from './api.js';
-import aboutText from './about.js';
+import aboutText from './about.mjs';
+let chatEnabled = false;
 
 export function registerKeydownListener() {
     document.body.addEventListener('keydown', async function(e) {
@@ -29,11 +30,11 @@ export function registerKeydownListener() {
                 return matched;
             });
 
-            if (trimmedText === 'clear') {
-                clearTerminal();
-            } else if (trimmedText === '/help') {
+            if (trimmedText === '/help') {
                 showCommands();
                 addNewLine();
+            } else if (trimmedText === 'clear') {
+                clearTerminal();
             } else if (trimmedText === '/about') {
                 addTextLine(aboutText);
                 addNewLine();
@@ -41,32 +42,22 @@ export function registerKeydownListener() {
                 const error = await getResume();
 
                 if (error) {
-                    addTextLine('Sorry, I\'m having trouble connecting to the server.');
+                    serverConnectionError();
                 }
 
                 addNewLine();
             } else if (trimmedText === '/contact') {
                 showContactInfo();
                 addNewLine();
+            } else if (trimmedText === '/enableChat' || trimmedText === '/disableChat') {
+                chatEnabled = trimmedText === '/enableChat';
+                addTextLine(`AI chat ${chatEnabled ? 'enabled' : 'disabled'}`);
+                addNewLine();
             } else if (trimmedText.startsWith('/chat')) {
-                // enable chat w/ AI
                 const chatText = trimmedText.replace('/chat', '').trim();
-                //send request to server
-                toggleEllipsis();
-                toggleUnderscore();
-                sendAIText(chatText)
-                    .then(function ({ data }) {
-                        toggleEllipsis();
-                        toggleUnderscore();
-                        addTextLine(data);
-                        addNewLine();
-                    })
-                    .catch(function (error) {
-                        toggleEllipsis();
-                        toggleUnderscore();
-                        addTextLine('Sorry, I\'m having trouble connecting to the server.');
-                        addNewLine();
-                    });
+                initAIChat(chatText);
+            } else if (chatEnabled) {
+                return initAIChat(trimmedText);
             } else if (matchedMiscCommand) {
                 addTextLine(miscCommands[ matchedMiscCommand ]);
                 addNewLine();
@@ -81,6 +72,7 @@ export function registerKeydownListener() {
 
 export function registerClickListener() {
     document.body.addEventListener('click', function(e) {
+        console.log('click', e);
         getLastInput().focus();
     });
 }
@@ -90,6 +82,26 @@ export function focusLastInput() {
     lastInput.addEventListener('input', resizeInput);
     resizeInput.call(lastInput);
     lastInput.focus();
+}
+
+// private methods
+
+function initAIChat(chatText) {
+    toggleEllipsis();
+    toggleUnderscore();
+    sendAIText(chatText)
+        .then(({ data }) => {
+            toggleEllipsis();
+            toggleUnderscore();
+            addTextLine(data);
+            addNewLine();
+        })
+        .catch(error => {
+            toggleEllipsis();
+            toggleUnderscore();
+            serverConnectionError();
+            addNewLine();
+        });
 }
 
 function getLastInput() {
@@ -160,6 +172,8 @@ function showCommands() {
         '/resume': 'Resume',
         '/contact': 'Contact',
         '/chat <input text>': 'Chat with my AI assistant',
+        '/enableChat': 'Enables AI chat for current window / tab without needing to preface input text with \'/chat\'',
+        '/disableChat': 'Disables AI chat preface for current window / tab',
         'clear': 'Clear the terminal',
     };
 
@@ -218,4 +232,8 @@ function toggleUnderscore() {
     const lastCursor = getLastCursor();
     const lastCursorUnderScore = [].slice.call(lastCursor.childNodes).find(child => child.className && child.className === 'underscore');
     lastCursorUnderScore.style.display = lastCursorUnderScore.style.display === 'none' ? 'inline' : 'none';
+}
+
+function serverConnectionError() {
+    addTextLine('Sorry, I\'m having trouble connecting to the server.');
 }
