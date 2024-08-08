@@ -6,10 +6,15 @@ import initAPI from './api.mjs';
 
 const app = express();
 const port = 3000;
+const origin = process.env.ENVIRONMENT === 'development' ? 'http://localhost:8080' : 'https://w3s.is';
 
 // middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin,
+    credentials: true,
+    optionSuccessStatus: 200,
+ }));
 
 initAPI(app);
 
