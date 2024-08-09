@@ -72,7 +72,6 @@ export function registerKeydownListener() {
 
 export function registerClickListener() {
     document.body.addEventListener('click', function(e) {
-        console.log('click', e);
         getLastInput().focus();
     });
 }
