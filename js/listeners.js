@@ -49,8 +49,8 @@ export function registerKeydownListener() {
             } else if (trimmedText === '/contact') {
                 showContactInfo();
                 addNewLine();
-            } else if (trimmedText === '/enableAI' || trimmedText === '/disableAI') {
-                chatEnabled = trimmedText === '/enableAI';
+            } else if (trimmedText === '/enableChat' || trimmedText === '/disableChat') {
+                chatEnabled = trimmedText === '/enableChat';
                 addTextLine(`AI chat ${chatEnabled ? 'enabled' : 'disabled'}`);
                 addNewLine();
             } else if (trimmedText.startsWith('/chat')) {
@@ -171,8 +171,8 @@ function showCommands() {
         '/resume': 'Resume',
         '/contact': 'Contact',
         '/chat <input text>': 'Chat with my AI assistant',
-        '/enableAI': 'Enables AI chat mode for current window without needing to preface input text with \'/chat\'',
-        '/disableAI': 'Disables AI chat mode for current window',
+        '/enableChat': 'Enables AI chat mode for current window without needing to preface input text with \'/chat\'',
+        '/disableChat': 'Disables AI chat mode for current window',
         'clear': 'Clear the terminal',
     };
 
