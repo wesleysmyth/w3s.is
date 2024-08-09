@@ -32,7 +32,7 @@ export function sendAIText(chatText) {
 export async function getResume() {
     try {
         const resume = await API.get('/resume', { responseType: 'arraybuffer' });
-        const blob = new Blob([resume.data], { type: 'application/pdf' });
+        const blob = new Blob([ resume.data ], { type: 'application/pdf' });
 
         saveAs(blob, 'Wesley Smith resumé.pdf');
     } catch (error) {

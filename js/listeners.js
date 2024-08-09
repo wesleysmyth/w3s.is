@@ -116,11 +116,11 @@ function addNewLine() {
     const allCursorsArr = [].slice.call(allCursors);
     const lastCursor = allCursorsArr[ allCursorsArr.length - 1 ];
     const newCursor = lastCursor.cloneNode(true);
-    const newCursorInput = newCursor.childNodes[1];
+    const newCursorInput = newCursor.childNodes[ 1 ];
 
     // disable all previous inputs
     allCursorsArr.forEach(cursor => {
-        const cursorInput = cursor.childNodes[1];
+        const cursorInput = cursor.childNodes[ 1 ];
         const cursorUnderscore = [].slice.call(cursor.childNodes).find(child => child.className && child.className === 'underscore');
 
         cursorInput.disabled = true;
@@ -153,9 +153,9 @@ function clearTerminal() {
     const cursorContainer = document.querySelector('.cursor-container');
     const cursorContainerChildren = [].slice.call(cursorContainer.children);
     const lastCursor = getLastCursor();
-    const lastCursorInput = lastCursor.childNodes[1];
+    const lastCursorInput = lastCursor.childNodes[ 1 ];
     const newCursor = lastCursor.cloneNode(true);
-    const newCursorInput = newCursor.childNodes[1];
+    const newCursorInput = newCursor.childNodes[ 1 ];
 
     cursorContainerChildren.forEach(child => {
         child.remove();

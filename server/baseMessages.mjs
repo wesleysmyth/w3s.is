@@ -12,5 +12,6 @@ export default function getBaseMessages(resumeSections) {
         { role: 'assistant', content: 'Sure, I can help with that. Please provide the resumé details.' },
         ...resumeSections.map(section => ({ role: 'user', content: section })),
         { role: 'user', content: `Here is some additional information about Wesley Tate Smith, written from his perspective, about his professional background and his career objectives. ${aboutText}` },
+        { role: 'assistant', content: 'Thank you for that information. Please let me know if I can answer any questions about Wesley or anything else at all.' },
     ];
 }
