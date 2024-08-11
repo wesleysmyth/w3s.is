@@ -1,6 +1,8 @@
 import aboutText from '../js/about.mjs';
+import { formatResumeText } from './pdf.mjs';
 
-export default function getBaseMessages(resumeSections) {
+export default async function getBaseMessages() {
+    const resumeSections = await formatResumeText();
     return [
         {
             role: 'system',
