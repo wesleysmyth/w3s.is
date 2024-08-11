@@ -1,3 +1,4 @@
+import { marked } from 'marked';
 import { getResume, sendAIText } from './api.js';
 import aboutText from './about.mjs';
 let chatEnabled = false;
@@ -92,7 +93,7 @@ function initAIChat(chatText) {
         .then(({ data }) => {
             toggleEllipsis();
             toggleUnderscore();
-            addTextLine(data);
+            addTextLine(marked.parse(data));
             addNewLine();
         })
         .catch(error => {
