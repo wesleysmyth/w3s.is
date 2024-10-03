@@ -4,7 +4,7 @@ import aboutText from './about.mjs';
 let chatEnabled = false;
 
 export function registerKeydownListener() {
-    document.body.addEventListener('keydown', async function(e) {
+    document.body.addEventListener('keydown', async function (e) {
         if (e.key === 'Enter') {
             const lastInput = getLastInput();
             const lastInputValue = lastInput.value;
@@ -36,6 +36,29 @@ export function registerKeydownListener() {
                 addNewLine();
             } else if (trimmedText === 'clear') {
                 clearTerminal();
+            } else if (trimmedText === '/meeting') {
+                toggleUnderscore();
+                toggleEllipsis();
+
+                const meetingDiv = document.createElement('div');
+                meetingDiv.classList.add('calendly-inline-widget');
+                meetingDiv.dataset.url = 'https://calendly.com/w3sley?hide_landing_page_details=0&hide_gdpr_banner=1&background_color=1a1a1a&text_color=27ff00&primary_color=19ff00';
+                meetingDiv.dataset.resize = 'true';
+
+                const calendlyWidgetScript = document.createElement('script');
+                calendlyWidgetScript.type = 'text/javascript';
+                calendlyWidgetScript.src = 'https://assets.calendly.com/assets/external/widget.js';
+                calendlyWidgetScript.async = true;
+                calendlyWidgetScript.onload = () => {
+                    setTimeout(() => {
+                        toggleEllipsis();
+                        toggleUnderscore();
+                    }, 2000);
+                    setTimeout(addNewLine, 4000);
+                }
+
+                document.querySelector('.cursor-container').appendChild(meetingDiv);
+                document.querySelector('.cursor-container').appendChild(calendlyWidgetScript);
             } else if (trimmedText === '/about') {
                 addTextLine(aboutText);
                 addNewLine();
@@ -60,7 +83,7 @@ export function registerKeydownListener() {
             } else if (chatEnabled) {
                 return initAIChat(trimmedText);
             } else if (matchedMiscCommand) {
-                addTextLine(miscCommands[ matchedMiscCommand ]);
+                addTextLine(miscCommands[matchedMiscCommand]);
                 addNewLine();
             } else {
                 addNewLine();
@@ -72,7 +95,7 @@ export function registerKeydownListener() {
 }
 
 export function registerClickListener() {
-    document.body.addEventListener('click', function(e) {
+    document.body.addEventListener('click', function (e) {
         getLastInput().focus();
     });
 }
@@ -115,13 +138,13 @@ function addNewLine() {
     const cursorContainer = document.querySelector('.cursor-container');
     const allCursors = document.querySelectorAll('.cursor');
     const allCursorsArr = [].slice.call(allCursors);
-    const lastCursor = allCursorsArr[ allCursorsArr.length - 1 ];
+    const lastCursor = allCursorsArr[allCursorsArr.length - 1];
     const newCursor = lastCursor.cloneNode(true);
-    const newCursorInput = newCursor.childNodes[ 1 ];
+    const newCursorInput = newCursor.childNodes[1];
 
     // disable all previous inputs
     allCursorsArr.forEach(cursor => {
-        const cursorInput = cursor.childNodes[ 1 ];
+        const cursorInput = cursor.childNodes[1];
         const cursorUnderscore = [].slice.call(cursor.childNodes).find(child => child.className && child.className === 'underscore');
 
         cursorInput.disabled = true;
@@ -137,7 +160,7 @@ function addNewLine() {
 function getLastCursor() {
     const allCursors = document.querySelectorAll('.cursor');
     const allCursorsArr = [].slice.call(allCursors);
-    return allCursorsArr[ allCursorsArr.length - 1 ];
+    return allCursorsArr[allCursorsArr.length - 1];
 }
 
 function resizeInput() {
@@ -154,9 +177,9 @@ function clearTerminal() {
     const cursorContainer = document.querySelector('.cursor-container');
     const cursorContainerChildren = [].slice.call(cursorContainer.children);
     const lastCursor = getLastCursor();
-    const lastCursorInput = lastCursor.childNodes[ 1 ];
+    const lastCursorInput = lastCursor.childNodes[1];
     const newCursor = lastCursor.cloneNode(true);
-    const newCursorInput = newCursor.childNodes[ 1 ];
+    const newCursorInput = newCursor.childNodes[1];
 
     cursorContainerChildren.forEach(child => {
         child.remove();
@@ -171,6 +194,7 @@ function showCommands() {
         '/about': 'About Me',
         '/resume': 'Resume',
         '/contact': 'Contact',
+        '/meeting': 'Schedule a meeting',
         '/chat <input text>': 'Chat with my AI assistant',
         '/enableChat': 'Enables AI chat mode for current window without needing to preface input text with \'/chat\'',
         '/disableChat': 'Disables AI chat mode for current window',
@@ -178,7 +202,7 @@ function showCommands() {
     };
 
     Object.keys(commands).forEach(command => {
-        const value = commands[ command ];
+        const value = commands[command];
         const commandDiv = document.createElement('div');
 
         commandDiv.classList.add('command');
@@ -196,7 +220,7 @@ function showContactInfo() {
     };
 
     Object.keys(contactInfo).forEach(contact => {
-        const value = contactInfo[ contact ];
+        const value = contactInfo[contact];
         const isLink = value.includes('http');
         const contactDiv = document.createElement('div');
         const href = contact === 'email' ? `mailto:${value}` : contact === 'phone' ? `tel:${value}` : value;
