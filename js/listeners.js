@@ -34,7 +34,7 @@ export function registerKeydownListener() {
             if (trimmedText === '/help') {
                 showCommands();
                 addNewLine();
-            } else if (trimmedText === 'clear') {
+            } else if (trimmedText === 'clear' || trimmedText === 'cl') {
                 clearTerminal();
             } else if (trimmedText === '/meeting') {
                 toggleUnderscore();
@@ -198,7 +198,7 @@ function showCommands() {
         '/chat <input text>': 'Chat with my AI assistant',
         '/enableChat': 'Enables AI chat mode for current window without needing to preface input text with \'/chat\'',
         '/disableChat': 'Disables AI chat mode for current window',
-        'clear': 'Clear the terminal',
+        'clear | cl': 'Clear the terminal',
     };
 
     Object.keys(commands).forEach(command => {
