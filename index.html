@@ -33,7 +33,15 @@
     <script>
         function showHelp() {
             const helpLayover = document.querySelector('.help-layover');
+            const glowingText = document.querySelector('.glowing-text');
+            const questionMark = document.querySelector('.help');
+
             helpLayover.style.display = helpLayover.style.display === 'none' ? 'block' : 'none';
+            questionMark.style.animation = 'none';
+
+            if (glowingText) {
+                glowingText.classList.remove('glowing-text');
+            }
         }
     </script>
 </head>

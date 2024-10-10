@@ -407,7 +407,47 @@ input:focus {
     width: 0px;
 }
 
+
+.glowing-text {
+    color: rgb(49, 199, 27);
+    animation: glowing-text 5s infinite alternate;
+}
+
 /* Keyframes */
+
+@-webkit-keyframes glowing-text {
+    0% {
+        text-shadow: 0 0 5px rgb(49, 199, 27), 0 0 10px rgb(49, 199, 27), 0 0 20px rgb(49, 199, 27);
+        font-size: 1.2em;
+    }
+
+    50% {
+        text-shadow: 0 0 10px rgb(49, 199, 27), 0 0 20px rgb(49, 199, 27), 0 0 40px rgb(49, 199, 27);
+        font-size: 1.5em;
+    }
+
+    100% {
+        text-shadow: 0 0 5px rgb(49, 199, 27), 0 0 10px rgb(49, 199, 27), 0 0 20px rgb(49, 199, 27);
+        font-size: 1.2em;
+    }
+}
+
+@keyframes glowing-text {
+    0% {
+        text-shadow: 0 0 5px rgb(49, 199, 27), 0 0 10px rgb(49, 199, 27), 0 0 20px rgb(49, 199, 27);
+        font-size: 1.2em;
+    }
+
+    50% {
+        text-shadow: 0 0 10px rgb(49, 199, 27), 0 0 20px rgb(49, 199, 27), 0 0 40px rgb(49, 199, 27);
+        font-size: 1.5em;
+    }
+
+    100% {
+        text-shadow: 0 0 5px rgb(49, 199, 27), 0 0 10px rgb(49, 199, 27), 0 0 20px rgb(49, 199, 27);
+        font-size: 1.2em;
+    }
+}
 
 @-webkit-keyframes blink {
     0% {

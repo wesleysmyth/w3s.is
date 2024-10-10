@@ -2,6 +2,14 @@ import { marked } from 'marked';
 import { getResume, sendAIText } from './api.js';
 import aboutText from './about.mjs';
 let chatEnabled = false;
+let showGlow = true;
+
+setTimeout(() => {
+    if (showGlow) {
+        const helpEl = document.querySelector('.help');
+        helpEl.classList.add('glowing-text');
+    }
+}, 25000);
 
 export function registerKeydownListener() {
     document.body.addEventListener('keydown', async function (e) {
@@ -34,8 +42,10 @@ export function registerKeydownListener() {
             if (trimmedText === '/help') {
                 showCommands();
                 addNewLine();
+                removeGlowText();
             } else if (trimmedText === 'clear' || trimmedText === 'cl') {
                 clearTerminal();
+                removeGlowText();
             } else if (trimmedText === '/meeting') {
                 toggleUnderscore();
                 toggleEllipsis();
@@ -59,9 +69,11 @@ export function registerKeydownListener() {
 
                 document.querySelector('.cursor-container').appendChild(meetingDiv);
                 document.querySelector('.cursor-container').appendChild(calendlyWidgetScript);
+                removeGlowText();
             } else if (trimmedText === '/about') {
                 addTextLine(aboutText);
                 addNewLine();
+                removeGlowText();
             } else if (trimmedText === '/resume') {
                 const error = await getResume();
 
@@ -70,17 +82,22 @@ export function registerKeydownListener() {
                 }
 
                 addNewLine();
+                removeGlowText();
             } else if (trimmedText === '/contact') {
                 showContactInfo();
                 addNewLine();
+                removeGlowText();
             } else if (trimmedText === '/enableChat' || trimmedText === '/disableChat') {
                 chatEnabled = trimmedText === '/enableChat';
                 addTextLine(`AI chat ${chatEnabled ? 'enabled' : 'disabled'}`);
                 addNewLine();
+                removeGlowText();
             } else if (trimmedText.startsWith('/chat')) {
                 const chatText = trimmedText.replace('/chat', '').trim();
                 initAIChat(chatText);
+                removeGlowText();
             } else if (chatEnabled) {
+                removeGlowText();
                 return initAIChat(trimmedText);
             } else if (matchedMiscCommand) {
                 addTextLine(miscCommands[matchedMiscCommand]);
@@ -92,6 +109,12 @@ export function registerKeydownListener() {
             closeHelpMenu();
         }
     });
+}
+
+function removeGlowText() {
+    showGlow = false;
+    const helpEl = document.querySelector('.help');
+    helpEl.classList.remove('glowing-text');
 }
 
 export function registerClickListener() {
@@ -171,6 +194,7 @@ function closeHelpMenu() {
     // close help menu if open
     const helpLayover = document.querySelector('.help-layover');
     helpLayover.style.display = helpLayover.style.display = 'none';
+    showGlow = false;
 }
 
 function clearTerminal() {
