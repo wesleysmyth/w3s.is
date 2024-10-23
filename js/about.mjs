@@ -1,6 +1,6 @@
 // About text for Wes
 
-export default 'Hi, thanks for visiting my site and taking the time to learn more about me. I\'m a passionate full-stack software engineer with over 14 years of professional engineering experience and 7 years in engineering management.<br><br>' +
+export default 'Hi, thanks for visiting my site and taking the time to learn more about me. I\'m a passionate full-stack software engineer with 15 years of professional engineering experience and 7 years in engineering management.<br><br>' +
 
 'My expertise spans across the stack, driven by a commitment to creating impactful experiences in every project I am involved in. I have experience developing in a multitude of languages including JavaScript, TypeScript, Solidity, Go, Java, Ruby, SQL / NoSQL, Bash, Python, and I am currently learning Rust.<br><br>' +
 
