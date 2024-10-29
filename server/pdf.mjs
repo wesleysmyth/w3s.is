@@ -8,7 +8,7 @@ async function extractTextFromPDF(filePath) {
 }
 
 export async function formatResumeText() {
-    const text = await extractTextFromPDF('./assets/Wesley Smith resumé.pdf');
+    const text = await extractTextFromPDF('./assets/Wesley Tate Smith resume.pdf');
     const sections = text.split('\n\n').map(section => section.trim()).filter(section => section.length > 0);
     return sections;
 }
