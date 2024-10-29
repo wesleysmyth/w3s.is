@@ -17,7 +17,7 @@ export default function initAPI(app) {
     });
 
     app.get('/resume', (req, res) => {
-        res.download('./assets/Wesley Smith resumé.pdf', `Wesley Smith resumé.pdf`, (err) => {
+        res.download('./assets/Wesley Tate Smith resume.pdf', `Wesley Tate Smith resume.pdf`, (err) => {
             if (err) {
                 console.log('err', err);
             }

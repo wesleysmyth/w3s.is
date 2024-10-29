@@ -34,7 +34,7 @@ export async function getResume() {
         const resume = await API.get('/resume', { responseType: 'arraybuffer' });
         const blob = new Blob([ resume.data ], { type: 'application/pdf' });
 
-        saveAs(blob, 'Wesley Smith resumé.pdf');
+        saveAs(blob, 'Wesley Tate Smith resume.pdf');
     } catch (error) {
         return error;
     }
